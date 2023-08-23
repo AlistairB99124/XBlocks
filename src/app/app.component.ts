@@ -157,11 +157,32 @@ export class AppComponent implements OnInit {
       this.marked = true;
       return this.arena.getByVec(current);
     }
+
+    if (this.arena.getByVec(top) === 0) {
+      this.arena[top.y][top.x] = this.arena[current.y][current.x];
+      this.arena[current.y][current.x] = 0;
+      this.marked = true;
+      return this.arena.getByVec(current);
+    }
+
+    if (typeof this.arena.getByVec(top) === 'undefined') {
+      if (this.arena.getByVec(current) === 0) {
+        this.arena[current.y][current.x] = this.arena[current.y + 1][current.x];
+        this.arena[current.y + 1][current.x] = 0;
+        this.marked = true;
+        return this.arena.getByVec(current);
+      }
+    }
     return;
   }
 
   sweepArena(placedBlock: Vec) {
     this.marked = false;
+    const updateScore = (value?: number) => {
+      if (value) {
+        this.player.score += value;
+      }
+    };
     const sweep = () => {
       this.arena.forEach((row, y) => {
         row.forEach((cell, x) => {
@@ -169,7 +190,7 @@ export class AppComponent implements OnInit {
           const rightCell = new Vec(y, x + 1);
           const topCell = new Vec(y - 1, x);
           try {
-            this.checkCells(leftCell, rightCell, topCell, new Vec(y, x));
+            updateScore(this.checkCells(leftCell, rightCell, topCell, new Vec(y, x)));
           } catch {
   
           }
@@ -184,52 +205,5 @@ export class AppComponent implements OnInit {
     }
 
     sweep();
-    /*const updateScore = (value: number) => {
-      this.player.score += value;
-    }
-    if (placedBlock.x === 0 && placedBlock.y === 0) {
-      if (this.arena[0][0] === this.arena[0][1]) {
-        this.arena[0][1] = this.arena[0][1] * 2;
-        this.arena[0][0] = 0;
-        updateScore(this.arena[0][1]);
-        return;
-      }
-    }
-
-    if (placedBlock.x === 0 && placedBlock.y === 4) {
-      if (this.arena[0][4] === this.arena[0][3]) {
-        this.arena[0][3] = this.arena[0][3] * 2;
-        this.arena[0][4] = 0;
-        updateScore(this.arena[0][3]);
-        return;
-      }
-    }
-
-    if (placedBlock.x === 0) {
-      const right = this.arena[0][placedBlock.y + 1];
-      const left = this.arena[0][placedBlock.y - 1];
-      const current = this.arena[0][placedBlock.y];
-      if (left === current && right === current) {
-        this.arena[placedBlock.x][placedBlock.y] = right * 3;
-        this.arena[0][placedBlock.y + 1] = 0;
-        this.arena[0][placedBlock.y - 1] = 0;
-        updateScore(this.arena[placedBlock.x][placedBlock.y]);
-        return;
-      }
-
-      if (left === current) {
-        this.arena[placedBlock.x][placedBlock.y] = left * 2;
-        this.arena[0][placedBlock.y - 1] = 0;
-        updateScore(this.arena[placedBlock.x][placedBlock.y]);
-        return;
-      }
-
-      if (right === current) {
-        this.arena[placedBlock.x][placedBlock.y] = right * 2;
-        this.arena[0][placedBlock.y + 1] = 0;
-        updateScore(this.arena[placedBlock.x][placedBlock.y]);
-        return;
-      }
-    }*/
   }
 }

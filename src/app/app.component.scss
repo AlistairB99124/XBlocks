@@ -29,8 +29,8 @@ aside {
     background-color: #000;
 
     .cell {
-        height: 44px;
-        width: 44px;
+        height: 64px;
+        width: 64px;
         border: 1px solid #000;
         display: flex;
         align-items: center;
@@ -53,13 +53,13 @@ aside {
 }
 
 .player-block {
-    height: 32px;
-    width: 32px;
+    height: 52px;
+    width: 52px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #fff;
     font-weight: bold;
     background: radial-gradient(circle at 24px 24px, #5cabff, #000);
-    font-size: 22px;
+    font-size: 32px;
 }

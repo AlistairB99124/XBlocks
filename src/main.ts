@@ -12,6 +12,9 @@ declare global {
 }
 
 Array.prototype.getByVec = function (vec: Vec) {
+  if (vec.x < 0 || vec.y < 0) {
+    return undefined;
+  }
   return this[vec.y][vec.x];
 }
 
