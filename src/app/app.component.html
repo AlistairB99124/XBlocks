@@ -1,0 +1,25 @@
+<main>
+  <aside>
+    <section id="score">
+      <label>Score</label><span [innerText]="player.score"></span>
+    </section>
+    <section id="arena">
+      <div class="row" *ngFor="let row of arena; let x = index">
+        <div class="cell" *ngFor="let cell of row; let y = index" [attr.data-vec]="x + ',' + y">
+          <button *ngIf="cell" type="button" mat-icon-button class="player-block" [style.background]="getColor(cell)">
+            <span [innerText]="cell"></span>
+          </button>
+        </div>
+      </div>
+    </section>
+    <section id="player">
+      <div class="row" style="height: 60px;">
+        <button *ngIf="player.block" style="margin: 4px" cdkDrag (cdkDragStarted)="onDragStart(player.block)"
+          (cdkDragEnded)="onDragDropped($event, player.block)" type="button" mat-icon-button class="player-block"
+          [style.background]="player.block.color">
+          <span [innerText]="player.block.value"></span>
+        </button>
+      </div>
+    </section>
+  </aside>
+</main>
