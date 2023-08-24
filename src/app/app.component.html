@@ -19,6 +19,10 @@
           [style.background]="player.block.color">
           <span [innerText]="player.block.value"></span>
         </button>
+        <button *ngIf="player.nextBlock" style="margin: 4px; opacity: 0.3;" type="button" mat-icon-button class="player-block"
+          [style.background]="player.nextBlock.color">
+          <span [innerText]="player.nextBlock.value"></span>
+        </button>
       </div>
     </section>
   </aside>

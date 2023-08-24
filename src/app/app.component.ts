@@ -1,6 +1,6 @@
 import { CdkDragEnd } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
-import { parseInt, sample, sampleSize } from 'lodash-es';
+import { clone, parseInt, sample, sampleSize } from 'lodash-es';
 import { Block } from './models/block';
 import { Vec } from './models/vec';
 
@@ -25,7 +25,8 @@ export class AppComponent implements OnInit {
 
   player = {
     block: null as Block | null,
-    score: 0
+    score: 0,
+    nextBlock: null as Block | null
   };
 
   possibleBlocks = [{
@@ -49,7 +50,8 @@ export class AppComponent implements OnInit {
   }
 
   populateBlocks() {
-    this.player.block = sample(this.possibleBlocks) as Block;
+    this.player.block = this.player.nextBlock ? clone(this.player.nextBlock) : sample(this.possibleBlocks) as Block;
+    this.player.nextBlock = sample(this.possibleBlocks) as Block;
   }
 
   onDragStart(block: Block | null) {
